@@ -167,6 +167,20 @@ The task queue holds Web API callbacks and event handlers to be able to get exec
 ![Closure Diagram](../../images//js/event-loop-11.png)
 ![Closure Diagram](../../images//js/event-loop-12.png)
 
+Another very popular callback based Web API is setTimeout and setTimout also receives a callback and a delay. So let's see how that works, so first we encounter a setTimout and this again gets added to the call stack but all it does again a register that callback and also to delay with the timer's API and in the background the browser will handle that timer then we have another setTimeout and again it registers the callback and the delay, after 100 ms the browser is like hey 100 ms expired so now callback moves onto the task queue, nothing on the call stack right now so this moves onto the call stack. It just very important to remembar that when you have a setTimeout and delay, it's not the delay untill it gets moved onto the call stack, no it's the delay untill it gets moved to the task queue, so this means that the delay we specify might not actually be the delay to execution because if the call stack was still very full with other tasks and this could run for many more seconds, the callback still have to wait in the task queue untill call stack is empty.
+![Closure Diagram](../../images//js/event-loop-13.png)
+
+Whenever we work with promises we're working with the MicroTask queue. The microtask queue is a special queue dedicated to then, catch finally call backs, a function body execution after await the queue microtask callback and new mutation observer callback so only those callbacks or those function body parts get pushed on microtask queue, so it's very specific
+![Closure Diagram](../../images//js/event-loop-14.png)
+
+Event loop prioritizes microtask queue over task queue. Whenever call stack is empty, event loop first ensures that microtask queue is entirely empty, so it gets all the tasks from the microtask queue moves them onto the call stack where they get executed and only then it will move to the task queue
+
+There is something important to keep in mind with microtasks is that a microtask can schedule another microtask and this means the event loop is just constantly handling the microtask and it never actually get to the task queue, it would just have to wait indefinetely so we're kind of creating an infinite loop, an infinite microstask loop freezing our entire program
+![Closure Diagram](../../images//js/event-loop-15.png)
+
+Let's just recap we've covered so far, so js is single threaded it can only handle one task at a time, we can use web apis to interact with the features leveraged by the browser, and some of these apis allow us to initiate async tasks in the background, so function call that initiates an async task like that is still added to the call stack but this is just hand it off to the browser. The actual async task is handled in the background, so it does not block the call stack, the task queue used by callback based apis to enue the callback once asynchrounous task has completed. Then we have microtask queue which is only used by promise handlers, the async function bodies after await microtask queue callbacks and new MutationObserver callbacks. Thsi queue has priority over the task queue. The event loop ensures that this queue is entirely empty before moving on task queue. And after handling each task from the task queue, the event loop checks the microtask queue to ensure that nothing has been added in the mean time.
+![Closure Diagram](../../images//js/event-loop-16.png)
+
 ## Recources
 
 - **JavaScript Visualized - Event Loop,** Web APIs, (Micro)task Queue by Lydia Hallie https://www.youtube.com/watch?v=eiC58R16hb8&t=26s
