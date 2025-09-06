@@ -33,7 +33,7 @@ counter(); // logs 3
 
 ## Recources
 
-- \*\*JavaScript Visualized - Event Loop, Web APIs, (Micro)task Queue by Lydia Hallie
-- \*\*"Syncing Async" (OSCON 2014) Kyle Simpson
+- **JavaScript Visualized - Event Loop,** Web APIs, (Micro)task Queue by Lydia Hallie
+- **"Syncing Async" (OSCON 2014)** by Kyle Simpson
 
 ## New words
