@@ -93,18 +93,18 @@ The Event Loop's job is to constantly check if the Call Stack is empty. If it is
 
 - Q3: "What will be the order of logs for the following code?"
 
-```
-console.log('1: Start');
+```javascript
+console.log("1: Start");
 
 setTimeout(() => {
-console.log('2: setTimeout Callback');
+  console.log("2: setTimeout Callback");
 }, 0);
 
 Promise.resolve().then(() => {
-console.log('3: Promise Microtask');
+  console.log("3: Promise Microtask");
 });
 
-console.log('4: End');
+console.log("4: End");
 ```
 
 Your Perfect Answer and Explanation:
@@ -130,7 +130,7 @@ Here's why:
 
 7. The stack is empty again. The Microtask Queue is now empty. The Event Loop checks the Callback Queue, finds '2: setTimeout Callback', pushes it to the stack, and logs it."
 
-![Closure Diagram](images/image.png)
+![Closure Diagram](../../images//js/image.png)
 
 ## Recources
 
