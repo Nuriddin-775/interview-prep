@@ -130,7 +130,42 @@ Here's why:
 
 7. The stack is empty again. The Microtask Queue is now empty. The Event Loop checks the Callback Queue, finds '2: setTimeout Callback', pushes it to the stack, and logs it."
 
-![Closure Diagram](../../images//js/image.png)
+## Notes from youtube by Lydia Hallie
+
+The Event loop pretty notorious topic in JS. But when we zoom out it's just a tiny component within javascript runtime.
+
+![Closure Diagram](../../images//js/event-loop-01.png)
+
+All these components together allow us to use asynchronous tasks in a non-blocking way in js, and this is important because js itself is single threaded we're working with a single call stack so the call stack manages the execution of our program.
+
+Here new execution context created pushed onto the call stack which is then evaluated and logs one
+![Closure Diagram](../../images//js/event-loop-02.png)
+
+Then on line 14 we invoke another function logThreeAndFour and within this function body we invoke yet another function logThree and within logThree we invoke another function log the console log three
+![Closure Diagram](../../images//js/event-loop-03.png)
+
+Something important to remember here again is that js can handle task at a time so if we had this long running task in which we have pretty heavy computation it takes while before for js can continue with rest of our program so the console log long task done is only logged after a couple seconds and this is not we want, because in the meantime our entire program is frozen so we want to avoid these long running tasks
+![Closure Diagram](../../images//js/event-loop-04.png)
+
+We have to use long running tasks like maybe a network request or anything based on user input, timers so what happens then, is our entire call stack blocked untill we get the data back. No because we're actually using Web APIs in those cases and what web apis provide set of interfaces that allow us to interact with the browser's features this includes fetch and others
+![Closure Diagram](../../images//js/event-loop-05.png)
+
+Browser is a very powerful platform with a lot of features, some of these features are required like you rendering engine or networking stack. Some of the web apis allow us to offload long running tasks to the browser so when we invoke such an API we're kind of just initiating that offloading and web apis that expose these asynchronous capabilities are either callback based or promise based
+![Closure Diagram](../../images//js/event-loop-06.png)
+![Closure Diagram](../../images//js/event-loop-07.png)
+
+So here we are looking callback based,so what happens here when we actually use this in our script so first the getCurrentPostion invocation gets added to the call stack
+![Closure Diagram](../../images//js/event-loop-08.png)
+
+However this is just to register those call backs and initiate that async task after doing that it can get popped off the call stack immediately so it doesn't wait for any data, now in the background the browser starts some kind of process that eventually shows the user popup
+![Closure Diagram](../../images//js/event-loop-09.png)
+
+This is not a problem because this is not happening on the call stack so our entire website is still responsive in case other tasks need to run instead. When user clicks on allow, API receives data from browser, and used success call back to handle this result. However it can't just push that call back to back on the call stack, this could disrupt an already running task and just create very unpredictable behavior. So instead callback gets pushed to the task queue which is also called callback queue for this exact reason.
+![Closure Diagram](../../images//js/event-loop-10.png)
+
+The task queue holds Web API callbacks and event handlers to be able to get executed at some point later in the future and this is what we finnally get to the event loop, it's event loop's responsibility to check if the call stack is empty and if that's the case so if nothing is running and then gets first available task from task queue and moves this to the call stack where it's executed
+![Closure Diagram](../../images//js/event-loop-11.png)
+![Closure Diagram](../../images//js/event-loop-12.png)
 
 ## Recources
 
