@@ -181,6 +181,33 @@ There is something important to keep in mind with microtasks is that a microtask
 Let's just recap we've covered so far, so js is single threaded it can only handle one task at a time, we can use web apis to interact with the features leveraged by the browser, and some of these apis allow us to initiate async tasks in the background, so function call that initiates an async task like that is still added to the call stack but this is just hand it off to the browser. The actual async task is handled in the background, so it does not block the call stack, the task queue used by callback based apis to enue the callback once asynchrounous task has completed. Then we have microtask queue which is only used by promise handlers, the async function bodies after await microtask queue callbacks and new MutationObserver callbacks. Thsi queue has priority over the task queue. The event loop ensures that this queue is entirely empty before moving on task queue. And after handling each task from the task queue, the event loop checks the microtask queue to ensure that nothing has been added in the mean time.
 ![Closure Diagram](../../images//js/event-loop-16.png)
 
+## Lecture from JS course
+
+What is JS engine? So javascript engine is simply computer program that executes js code. Every browser has its own js engine, but probably the most well known is google's v-eight. V-eight powers google chrome and node js. Any javascript engine always contains a call stack and a heap. The call stack is where our code is actually executed using something called execution contexts.Then the heap is an unstructured memory pool which stores all the objects that our application needs.
+
+The Memory Heap is an unstructured region of memory where all the objects, functions, and other reference types in your program are stored. When you create a variable or an object (let person = { name: 'Alex' }), the data is placed in the heap, and a reference to that memory location is stored in your variable. It's simply a large space for storing data.
+
+Compilation vs. Interpretation
+This describes how a programming language is translated into machine code that a computer can understand.
+
+Interpretation
+An interpreter reads your code line by line and executes each line immediately. It doesn't know what's coming next.
+
+- Pros: Easy to get started and debug because it stops at the first error.
+
+- Cons: Slower, because the translation happens at the same time the code is running. If you run the same function multiple times, it has to be translated every single time.
+
+Compilation
+A compiler reads your entire codebase at once, analyzes it, optimizes it, and translates it into a separate, highly-optimized machine code file. You then run that compiled file.
+
+- Pros: Very fast execution because all the translation work is done beforehand.
+
+- Cons: There's a delay before you can run the code because of the initial compilation step.
+
+Modern JavaScript engines are more advanced. They use a Just-In-Time (JIT) Compiler.
+
+A JIT compiler starts by interpreting the code. While it's interpreting, it identifies "hot" pieces of code (functions that are run frequently). It then sends these hot functions to a compiler, which optimizes them and converts them into machine code on the fly.
+
 ## Recources
 
 - **JavaScript Visualized - Event Loop,** Web APIs, (Micro)task Queue by Lydia Hallie https://www.youtube.com/watch?v=eiC58R16hb8&t=26s
