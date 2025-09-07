@@ -187,24 +187,27 @@ What is JS engine? So javascript engine is simply computer program that executes
 
 The Memory Heap is an unstructured region of memory where all the objects, functions, and other reference types in your program are stored. When you create a variable or an object (let person = { name: 'Alex' }), the data is placed in the heap, and a reference to that memory location is stored in your variable. It's simply a large space for storing data.
 
-Compilation vs. Interpretation
+### Compilation vs. Interpretation
+
 This describes how a programming language is translated into machine code that a computer can understand.
 
-Interpretation
+### Interpretation
+
 An interpreter reads your code line by line and executes each line immediately. It doesn't know what's coming next.
 
 - Pros: Easy to get started and debug because it stops at the first error.
 
 - Cons: Slower, because the translation happens at the same time the code is running. If you run the same function multiple times, it has to be translated every single time.
 
-Compilation
+### Compilation
+
 A compiler reads your entire codebase at once, analyzes it, optimizes it, and translates it into a separate, highly-optimized machine code file. You then run that compiled file.
 
 - Pros: Very fast execution because all the translation work is done beforehand.
 
 - Cons: There's a delay before you can run the code because of the initial compilation step.
 
-Modern JavaScript engines are more advanced. They use a Just-In-Time (JIT) Compiler.
+### Modern JavaScript engines are more advanced. They use a Just-In-Time (JIT) Compiler.
 
 A JIT compiler starts by interpreting the code. While it's interpreting, it identifies "hot" pieces of code (functions that are run frequently). It then sends these hot functions to a compiler, which optimizes them and converts them into machine code on the fly.
 
