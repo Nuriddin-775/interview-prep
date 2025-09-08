@@ -150,3 +150,50 @@ Your Answer: "The output will be A, D, C, B.
 - setTimeout's callback ('B') is placed in the Callback Queue.
 - The Promise's .then() callback ('C') is placed in the Microtask Queue.
 - The Event Loop always empties the Microtask Queue completely before processing anything from the Callback Queue. Therefore, 'C' logs before 'B'."
+
+## Notes from youtube by Lydia Hallie
+
+One way to create a promise is by using new Promise constructor and this constructor also receives an Executer function. When the promise constructor is executed, a new promise object is created in memory and this object constains some internal slots like the PromiseState, PromiseResult, PromiseFulFillReactions, PromiseRejectReactions and PromiseIsHandled. We also get additional functionality to either resolve or reject this promise.
+![Closure Diagram](../../images//js/promise-01.png)
+
+Now we can resolve this Promise by calling resolve which is made available to us by the executer function and when we call resolve the PromiseState is set to fulfilled and the PromisedResult is set to the value that we pass to resolve so the string done in this case.
+![Closure Diagram](../../images//js/promise-02.png)
+
+Simularly we can reject the Promise by calling reject, in which case the PromiseState is said to rejected and the PromiseResult is set to the value that we passed to reject, so the string "fail".
+![Closure Diagram](../../images//js/promise-03.png)
+
+So nothing special here we're just calling function to change some object property. So what's so spacial about promises. Well that's actually in those two fields that we skipped so far, so in the PromiseFulFillReactions and PromiseRejectReactions. Because these fields contains something called Promise reaction records. We can create a promise reaction record by chaining a **then** or a **catch** method to the promise. So whenever we chain **then**, the then method is responsible for creating that promise reaction record and among many other fields this reaction record contains a handler and this has some code and that code is that callback that we passed to **then**.Now what happens is that whenever we resolve the promise, so we call resolve, resolve is added to the call stack the promise state is set to fulfill the promise result set to the value that we pass to resolve and promise reaction records handler receives that promise result. So string "done" in this case. And the handler is now added to microTask queue
+![Closure Diagram](../../images//js/promise-04.png)
+![Closure Diagram](../../images//js/promise-05.png)
+
+Usually you want to initiate some kind of asynchronous task in this constructor with an asynchronous task, i mean anything off the main thread. So reading something from a file system or a network request or something as simple as a timer. Whenever they return data, we can use their callback function to either resolve with the data that returned or reject if an error occured
+![Closure Diagram](../../images//js/promise-06.png)
+
+Let's see how the execution goes for this promise constructor. So we have promise constructor that has a setTimeout and we also have a **then** handler. Let's just go through it step by step and see what happens. So first a new promise constructor is added to the call stack and this creates the promise object.
+![Closure Diagram](../../images//js/promise-07.png)
+
+The executer function is called and on the first line we have setTimeout, so setTimeout is added to the call stack and this one is responsible for scheduling that timer. In this case 100 milliseconds and it has callback that we passed to the setTimeout so the function that eventually calls resolve.
+![Closure Diagram](../../images//js/promise-08.png)
+
+Then on the next line we have then handler, so then is added to the call stack and this responsible for creating that PromiseReactionRecord, so this creates a PromiseReactionRecord with a callback that we provided as its handler.
+![Closure Diagram](../../images//js/promise-09.png)
+
+After 100 ms finished, the callback that we passed to the setTimeout is now added to the task queue, there is nothing on the call stack anymore, so it can now go from task queue to call stack. And this now calls resolve so this changes PromiseResult to fulfilled, the PromiseReult to string 'done' and it schedules handler to the microtask queue. Event loop does its job, and at the end console.log(result) gets executed on call stack and result is string "Done". So all process means we can handle promise result in non blocking way.
+![Closure Diagram](../../images//js/promise-10.png)
+
+Another cool thing is that **then** itself also returns promise, so besides just creating that PromiseReactionRecord it also creates a promise object and this allow us to chain those thens to each other and have this incremental promiseResults handling.
+![Closure Diagram](../../images//js/promise-11.png)
+
+### Let's see this example
+
+![Closure Diagram](../../images//js/promise-12.png)
+
+So first we have the new promise constructor again added to the call stack, new promise object created, then we the executer function which gets added to the call stack and on the very first line we have console.log(1). This gets added through the call stack and logs 1. Then we call resolve with two. So now the PromiseState is changed to fulFilled, the PromiseResult is set to two and we don't have
+a promise fulFill reaction yet so that only happens on the next line.
+![Closure Diagram](../../images//js/promise-13.png)
+
+Next line we finally have **then** so this creates that promise reaction record, it doesn't get added to that list becasue promise is already resolved, this would just take up unnecessary memory but still has access to that promised result. So this promise reaction record has the handler with the result being two and then console log result so this immediately added to the microtask queue
+![Closure Diagram](../../images//js/promise-14.png)
+
+Then call stack isn't empty yet, so console.log(3) will be executed and logs three. Then finnaly call stack is empty, there is nothing on the call stack, so the first task in the microtask queue is added to the call stack which is that **then** handler which then console logs the result being two, so finally two gets logged.
+![Closure Diagram](../../images//js/promise-15.png)
