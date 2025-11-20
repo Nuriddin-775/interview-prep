@@ -4,7 +4,7 @@ This is the right mindset: Focus on understanding and habit formation over hitti
 
 The goal is to complete the four core books required for your interview roadmap, plus the two foundational books for a complete habit, in a logical order.
 
-![ydks](../../images//js/ydkj-1.png)
+![ydks](../images/js/ydkj-1.png)
 
 ## 🧠 The Reading Strategy: Active Immersion
 
@@ -21,7 +21,7 @@ To overcome reading fatigue and build a habit, you must turn reading into a prob
 
 2. The Read-Code-Review Cycle (The Anti-Boredom Method)
 
-![ydks](../../images//js/ydkj-2.png)
+![ydks](../images/js/ydkj-2.png)
 
 ## ⏰ Reading Routine and Break Strategy
 
@@ -61,5 +61,5 @@ Keep a simple note file with:
 
 Review this short glossary every few days for quick recall.
 Examples:
-![ydks](../../images//js/ydkj-3.png)
-![ydks](../../images//js/ydkj-4.png)
+![ydks](../images/js/ydkj-3.png)
+![ydks](../images/js/ydkj-4.png)
